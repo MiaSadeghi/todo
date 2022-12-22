@@ -22,7 +22,11 @@ const ToDoList = () => {
 
   console.log(tasks);
   return (
-    <div>
+    <div className="task__container">
+      <div className="task__container-header">
+        <h2>Project Name</h2>
+        <i className="fa-solid fa-ellipsis" />
+      </div>
       {tasks.map((task) => (
         <ToDo text={task.text} key={task.text} />
       ))}
