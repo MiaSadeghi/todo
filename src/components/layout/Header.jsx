@@ -1,18 +1,18 @@
-const Header = () => {
+import Search from "./Search";
+
+const Header = (props) => {
   return (
     <header className="header">
-      <div className="header__left-controls">
-        <button>
+      <div className="header__controls-left">
+        <button onClick={props.toggleSideMenu}>
           <i className="fa-solid fa-bars" />
         </button>
         <button>
           <i className="fa-solid fa-house" />
         </button>
-        <div>
-          <i className="fa-solid fa-magnifying-glass" />
-        </div>
+        <Search />
       </div>
-      <div className="header__right-controls">
+      <div className="header__controls-right">
         <button>
           <i className="fa-solid fa-plus" />
         </button>

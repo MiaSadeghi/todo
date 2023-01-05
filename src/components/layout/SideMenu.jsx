@@ -1,8 +1,8 @@
-const Sidebar = () => {
+const SideMenu = () => {
   return (
-    <div className="sidebar">
+    <div className="sidemenu">
       <div>
-        <div className="sidebar-title">Projects</div>
+        <div className="sidemenu-title">Projects</div>
         <ul>
           <li>Errands</li>
           <li>Personal</li>
@@ -13,4 +13,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SideMenu;
