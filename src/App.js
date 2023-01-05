@@ -1,9 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import Header from "./components/layout/Header";
-import Sidebar from "./components/layout/Sidebar";
+import SideMenu from "./components/layout/SideMenu";
 import "./styles.scss";
 import Main from "./components/layout/Main";
+import { useState } from "react";
 
 let database;
 
@@ -14,12 +15,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 database = getDatabase(app);
+
 function App() {
+  const [sideMenuIsOpen, setSideMenuIsOpen] = useState(false);
+  const toggleSideMenu = () => {
+    setSideMenuIsOpen((prevState) => !prevState);
+  };
+
   return (
     <div className="App">
-      <Header />
+      <Header toggleSideMenu={toggleSideMenu} />
       <div>
-        <Sidebar />
+        {sideMenuIsOpen && <SideMenu />}
         <Main />
         {/* <Modal /> */}
       </div>

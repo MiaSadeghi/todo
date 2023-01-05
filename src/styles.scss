@@ -1,7 +1,7 @@
 $hover-bg-color: rgb(180, 180, 180, 0.2);
-
+$main-color: blueviolet;
 .header {
-  background-color: blueviolet;
+  background-color: $main-color;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -10,14 +10,15 @@ $hover-bg-color: rgb(180, 180, 180, 0.2);
   position: -webkit-sticky;
   z-index: 10;
 
-  &__left-controls {
+  &__controls-left {
     flex-basis: 0;
     flex-grow: 1;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
   }
 
-  &__right-controls {
+  &__controls-right {
     flex-basis: 0;
     flex-grow: 1;
     display: flex;
@@ -39,7 +40,34 @@ $hover-bg-color: rgb(180, 180, 180, 0.2);
   }
 }
 
-.sidebar {
+.search {
+  &-box {
+    height: 30px;
+    width: 200px;
+    padding: 0 10px;
+    margin: 0 3px;
+    border-radius: 2px;
+    background-color: rgb(149, 65, 228);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover {
+      background-color: white;
+      color: black;
+    }
+  }
+
+  &-input {
+    &::placeholder {
+      color: white;
+      font-size: 0.8rem;
+    }
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+}
+.sidemenu {
   background-color: rgb(230, 229, 229);
   padding: 100px 20px 20px;
   position: fixed;
