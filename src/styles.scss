@@ -119,7 +119,7 @@ $main-color: blueviolet;
 }
 
 .modal {
-  &__container {
+  &-container {
     background-color: red;
     position: fixed;
     width: 100px;
@@ -128,7 +128,7 @@ $main-color: blueviolet;
     z-index: 100;
   }
 
-  &__backdrop {
+  &-backdrop {
     background-color: black;
     left: 0;
     top: 0;

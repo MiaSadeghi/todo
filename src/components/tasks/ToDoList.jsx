@@ -1,23 +1,21 @@
-import axios from "axios";
 import ToDo from "./ToDo";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import Parse from "parse";
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
   useEffect(() => {
-    axios
-      .get("https://todolist-76f05-default-rtdb.firebaseio.com/todos.json")
-      .then((response) => response.data)
-      .then((data) => {
-        Object.keys(data).forEach((key) => {
-          const fetchedTasks = { text: data[key].text };
-          setTasks((prevTasks) => [...prevTasks, fetchedTasks]);
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const Todos = Parse.Object.extend("Todo");
+    const ProjectClass = Parse.Object.extend("Project");
+
+    const targetProject = new ProjectClass({ objectId: "5ZmPXZR0U9" });
+
+    const query = new Parse.Query(Todos);
+    query.equalTo("projectId", targetProject);
+
+    query.find().then((results) => {
+      setTasks(results);
+    });
   }, []);
 
   console.log(tasks);
@@ -28,7 +26,7 @@ const ToDoList = () => {
         <i className="fa-solid fa-ellipsis" />
       </div>
       {tasks.map((task) => (
-        <ToDo text={task.text} key={task.text} />
+        <ToDo text={task.attributes.Name} key={task.id} />
       ))}
     </div>
   );

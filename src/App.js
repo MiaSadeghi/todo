@@ -1,34 +1,35 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
 import Header from "./components/layout/Header";
 import SideMenu from "./components/layout/SideMenu";
 import "./styles.scss";
 import Main from "./components/layout/Main";
 import { useState } from "react";
+import AddTask from "./components/tasks/AddTask";
+import Parse from "parse";
 
-let database;
+Parse.initialize(
+  "LnrbFsNNOsViGRsQ5mdOVsCQYTz58nTxbqZmQSkr",
+  "Ohmle0KusWBYdDCMu2ewE5b0lNwSgimYw4IW39GP",
+);
 
-const firebaseConfig = {
-  databaseURL: "https://todolist-76f05-default-rtdb.firebaseio.com",
-};
-
-const app = initializeApp(firebaseConfig);
-
-database = getDatabase(app);
-
+Parse.serverURL = "https://parseapi.back4app.com";
 function App() {
   const [sideMenuIsOpen, setSideMenuIsOpen] = useState(false);
   const toggleSideMenu = () => {
     setSideMenuIsOpen((prevState) => !prevState);
   };
 
+  const [addTaskModalIsOpen, setAddTaskModalIsOpen] = useState(false);
+  const toggleAddTaskModal = () => {
+    setAddTaskModalIsOpen((prevState) => !prevState);
+  };
+
   return (
     <div className="App">
-      <Header toggleSideMenu={toggleSideMenu} />
+      <Header functions={{ toggleSideMenu, toggleAddTaskModal }} />
       <div>
         {sideMenuIsOpen && <SideMenu />}
         <Main />
-        {/* <Modal /> */}
+        {addTaskModalIsOpen && <AddTask />}
       </div>
     </div>
   );

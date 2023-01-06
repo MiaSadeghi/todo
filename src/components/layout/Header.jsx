@@ -1,10 +1,11 @@
 import Search from "./Search";
 
 const Header = (props) => {
+  const { toggleAddTaskModal, toggleSideMenu } = props.functions;
   return (
     <header className="header">
       <div className="header__controls-left">
-        <button onClick={props.toggleSideMenu}>
+        <button onClick={toggleSideMenu}>
           <i className="fa-solid fa-bars" />
         </button>
         <button>
@@ -13,7 +14,7 @@ const Header = (props) => {
         <Search />
       </div>
       <div className="header__controls-right">
-        <button>
+        <button onClick={toggleAddTaskModal}>
           <i className="fa-solid fa-plus" />
         </button>
         <button>
