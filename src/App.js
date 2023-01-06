@@ -2,9 +2,9 @@ import Header from "./components/layout/Header";
 import SideMenu from "./components/layout/SideMenu";
 import "./styles.scss";
 import Main from "./components/layout/Main";
-import { useState } from "react";
 import AddTask from "./components/tasks/AddTask";
 import Parse from "parse";
+import { useSelector, useDispatch } from "react-redux";
 
 Parse.initialize(
   "LnrbFsNNOsViGRsQ5mdOVsCQYTz58nTxbqZmQSkr",
@@ -12,20 +12,17 @@ Parse.initialize(
 );
 
 Parse.serverURL = "https://parseapi.back4app.com";
-function App() {
-  const [sideMenuIsOpen, setSideMenuIsOpen] = useState(false);
-  const toggleSideMenu = () => {
-    setSideMenuIsOpen((prevState) => !prevState);
-  };
 
-  const [addTaskModalIsOpen, setAddTaskModalIsOpen] = useState(false);
-  const toggleAddTaskModal = () => {
-    setAddTaskModalIsOpen((prevState) => !prevState);
-  };
+function App() {
+  const sideMenuIsOpen = useSelector((state) => state.layout.sideMenuOpen);
+
+  const addTaskModalIsOpen = useSelector(
+    (state) => state.layout.addTaskModalOpen,
+  );
 
   return (
     <div className="App">
-      <Header functions={{ toggleSideMenu, toggleAddTaskModal }} />
+      <Header />
       <div>
         {sideMenuIsOpen && <SideMenu />}
         <Main />
