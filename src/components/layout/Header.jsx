@@ -1,6 +1,6 @@
 import Search from "./Search";
 import { useDispatch } from "react-redux";
-import { toggleAddTaskModal, toggleSideMenu } from "../../redux/layoutSlice";
+import { showAddTaskModal, toggleSideMenu } from "../../redux/layoutSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Header = () => {
         <Search />
       </div>
       <div className="header__controls-right">
-        <button onClick={() => dispatch(toggleAddTaskModal())}>
+        <button onClick={() => dispatch(showAddTaskModal())}>
           <i className="fa-solid fa-plus" />
         </button>
         <button>
