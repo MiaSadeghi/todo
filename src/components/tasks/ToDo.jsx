@@ -1,3 +1,5 @@
+import { Checkbox } from "@mui/material";
+
 const ToDo = (props) => {
   const { text } = props;
 
@@ -5,6 +7,7 @@ const ToDo = (props) => {
 
   return (
     <div className="task__item">
+      <Checkbox onChange={handleMarkAsDone} />
       <input type="checkbox" onClick={handleMarkAsDone} />
       <p>{text}</p>
     </div>

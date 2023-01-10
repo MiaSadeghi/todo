@@ -1,5 +1,7 @@
 import { useState } from "react";
 import Modal from "../modal/Modal";
+import Button from "@mui/material/Button";
+import { TextField } from "@mui/material";
 
 const AddTask = () => {
   const [userInput, setUserInput] = useState("");
@@ -15,8 +17,18 @@ const AddTask = () => {
   return (
     <Modal>
       <form onSubmit={handleFormSubmit}>
-        <input value={userInput} onChange={handleInputChange} type="text" />
-        <button type="submit">Add Task</button>
+        <TextField
+          id="standard-basic"
+          label="Task Name"
+          variant="standard"
+          value={userInput}
+          onChange={handleInputChange}
+          type="text"
+          required
+        />
+        <Button variant="contained" type="submit">
+          Add Task
+        </Button>
       </form>
     </Modal>
   );
