@@ -1,4 +1,4 @@
-import { Checkbox } from "@mui/material";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
 const ToDo = (props) => {
   const { text } = props;
@@ -7,9 +7,7 @@ const ToDo = (props) => {
 
   return (
     <div className="task__item">
-      <Checkbox onChange={handleMarkAsDone} />
-      <input type="checkbox" onClick={handleMarkAsDone} />
-      <p>{text}</p>
+      <FormControlLabel control={<Checkbox />} label={text} />{" "}
     </div>
   );
 };
