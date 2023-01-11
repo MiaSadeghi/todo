@@ -1,10 +1,14 @@
 import ToDo from "./ToDo";
 import { useState, useEffect } from "react";
 import Parse from "parse";
+import { Skeleton } from "@mui/material";
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
+    setIsLoading(true);
     const Todos = Parse.Object.extend("Todo");
     const ProjectClass = Parse.Object.extend("Project");
 
@@ -15,6 +19,7 @@ const ToDoList = () => {
 
     query.find().then((results) => {
       setTasks(results);
+      setIsLoading(false);
     });
   }, []);
 
