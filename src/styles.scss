@@ -105,6 +105,7 @@ $main-color: blueviolet;
 
   &__container {
     margin: 50px 0;
+    width: 800px;
 
     &-header {
       display: flex;
@@ -113,6 +114,7 @@ $main-color: blueviolet;
       h2 {
         margin: 0;
         padding: 0;
+        padding-bottom: 20px;
       }
     }
   }

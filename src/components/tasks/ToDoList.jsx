@@ -1,7 +1,7 @@
 import ToDo from "./ToDo";
 import { useState, useEffect } from "react";
 import Parse from "parse";
-import { Skeleton } from "@mui/material";
+import { Skeleton, Checkbox, FormControlLabel } from "@mui/material";
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
@@ -30,9 +30,11 @@ const ToDoList = () => {
         <h2>Project Name</h2>
         <i className="fa-solid fa-ellipsis" />
       </div>
-      {tasks.map((task) => (
-        <ToDo text={task.attributes.Name} key={task.id} />
-      ))}
+      {isLoading
+        ? [1, 2, 3].map((_) => <ToDo decorative key={_} />)
+        : tasks.map((task) => (
+            <ToDo text={task.attributes.Name} key={task.id} />
+          ))}
     </div>
   );
 };
