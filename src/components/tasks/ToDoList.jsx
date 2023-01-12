@@ -1,7 +1,6 @@
 import ToDo from "./ToDo";
 import { useState, useEffect } from "react";
 import Parse from "parse";
-import { Skeleton, Checkbox, FormControlLabel } from "@mui/material";
 
 const ToDoList = () => {
   const [tasks, setTasks] = useState([]);
