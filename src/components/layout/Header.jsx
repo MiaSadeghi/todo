@@ -1,11 +1,12 @@
-import Search from "./Search";
 import { useDispatch } from "react-redux";
 import { showAddTaskModal, toggleSideMenu } from "../../redux/layoutSlice";
+import { AppBar } from "@mui/material";
+import Search from "./Search";
 
 const Header = () => {
   const dispatch = useDispatch();
   return (
-    <header className="header">
+    <AppBar position="sticky" color="primary" style={{ backgroundColor: "" }}>
       <div className="header__controls-left">
         <button onClick={() => dispatch(toggleSideMenu())}>
           <i className="fa-solid fa-bars" />
@@ -23,7 +24,7 @@ const Header = () => {
           <i className="fa-regular fa-user" />
         </button>
       </div>
-    </header>
+    </AppBar>
   );
 };
 
