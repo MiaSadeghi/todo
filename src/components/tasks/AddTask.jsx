@@ -1,10 +1,15 @@
 import { useState } from "react";
-import Modal from "../modal/Modal";
-import Button from "@mui/material/Button";
-import { TextField } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { hideAddTaskModal } from "../../redux/layoutSlice";
+
+import { Dialog, TextField, DialogContent, Button } from "@mui/material";
 
 const AddTask = () => {
   const [userInput, setUserInput] = useState("");
+  const addTaskModalOpen = useSelector(
+    (state) => state.layout.addTaskModalOpen,
+  );
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     setUserInput(e.target.value);
@@ -15,22 +20,32 @@ const AddTask = () => {
   };
 
   return (
-    <Modal>
-      <form onSubmit={handleFormSubmit}>
-        <TextField
-          id="standard-basic"
-          label="Task Name"
-          variant="standard"
-          value={userInput}
-          onChange={handleInputChange}
-          type="text"
-          required
-        />
-        <Button variant="contained" type="submit">
-          Add Task
-        </Button>
-      </form>
-    </Modal>
+    <Dialog
+      open={addTaskModalOpen}
+      onClose={() => {
+        dispatch(hideAddTaskModal());
+      }}
+    >
+      <DialogContent>
+        <form onSubmit={handleFormSubmit}>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="task-name"
+            label="Task Name"
+            type="text"
+            fullWidth
+            value={userInput}
+            onChange={handleInputChange}
+            variant="standard"
+            color="info"
+          />
+          <Button variant="contained" type="submit">
+            Add Task
+          </Button>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 };
 
