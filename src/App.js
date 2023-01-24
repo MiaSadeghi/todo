@@ -2,9 +2,9 @@ import Header from "./components/layout/Header";
 import SideMenu from "./components/layout/SideMenu";
 import "./styles.scss";
 import Main from "./components/layout/Main";
-import AddTask from "./components/tasks/AddTask";
+import AddTask from "./components/tasks/add-task/AddTask";
 import Parse from "parse";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 Parse.initialize(
   "LnrbFsNNOsViGRsQ5mdOVsCQYTz58nTxbqZmQSkr",
