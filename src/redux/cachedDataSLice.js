@@ -4,14 +4,19 @@ export const cachedDataSlice = createSlice({
   name: "cachedData",
   initialState: {
     projects: [],
+    labels: [],
   },
 
   reducers: {
-    setProjects: (state, action) => {
-      state.projects = action.payload;
+    addProject: (state, action) => {
+      state.projects.push(action.payload);
+    },
+
+    addLabel: (state, action) => {
+      state.labels.push(action.payload);
     },
   },
 });
 
-export const { setProjects } = cachedDataSlice.actions;
+export const { addProject, addLabel } = cachedDataSlice.actions;
 export default cachedDataSlice.reducer;
