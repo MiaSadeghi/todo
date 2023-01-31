@@ -5,7 +5,6 @@ import Main from "./components/layout/Main";
 import AddTask from "./components/tasks/add-task/AddTask";
 import Parse from "parse";
 import { useSelector } from "react-redux";
-import { Box, Stack } from "@mui/material";
 
 Parse.initialize(
   "LnrbFsNNOsViGRsQ5mdOVsCQYTz58nTxbqZmQSkr",

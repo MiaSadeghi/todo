@@ -12,7 +12,12 @@ import {
   Divider,
 } from "@mui/material";
 import { Today as TodayIcon } from "@mui/icons-material";
-import { quickDatesArr, dates } from "../../../utils/dateTimeUtil";
+import {
+  quickDatesArr,
+  dates,
+  isSameYear,
+  isLessThanAWeekAway,
+} from "../../../utils/dateTimeUtil";
 
 const SelectDateMenu = ({
   open,
@@ -54,7 +59,7 @@ const SelectDateMenu = ({
             <MenuItem
               key={date.name}
               onClick={() => {
-                selectDate(dates.date.name);
+                selectDate(date.date);
               }}
             >
               <ListItemIcon>
@@ -64,7 +69,7 @@ const SelectDateMenu = ({
                 {date.name}
               </ListItemText>
               <Typography variant="caption" color="text.secondary">
-                {date.description}
+                {date.label}
               </Typography>
             </MenuItem>
           );
@@ -78,6 +83,7 @@ const SelectDateMenu = ({
           value={date}
           onChange={(e) => {
             selectDate(moment(e));
+            console.log(moment(e));
           }}
           inputFormat="YYYY-MM-DD"
           renderInput={(params) => <TextField {...params} size="small" />}

@@ -4,7 +4,6 @@ import { hideAddTaskModal } from "../../../redux/layoutSlice";
 import AddAlarmIcon from "@mui/icons-material/AddAlarm";
 import LabelOutlinedIcon from "@mui/icons-material/LabelOutlined";
 import OutlinedFlagOutlinedIcon from "@mui/icons-material/OutlinedFlagOutlined";
-import moment from "moment/moment";
 import {
   Dialog,
   TextField,
@@ -18,12 +17,13 @@ import {
 } from "@mui/material";
 import SelectDateMenu from "./SelectDateMenu";
 import PriorityMenu from "./PriorityMenu";
+import { isSameYear, isLessThanAWeekAway } from "../../../utils/dateTimeUtil";
 
 const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskProject, setTaskProject] = useState("");
-  const [taskDueDate, setTaskDueDate] = useState("");
+  const [taskDueDate, setTaskDueDate] = useState(null);
   const [priorityAnchor, setPriorityAnchor] = useState(null);
   const [selectDateAnchor, setSelectDateAnchor] = useState(null);
   const [dateButtonTxt, setDateButtonTxt] = useState("Today");
@@ -43,10 +43,24 @@ const AddTask = () => {
     setSelectDateAnchor(null);
   };
 
+  const generateDateButtonLabel = (date) => {
+    if (date === null) {
+      return "No due date";
+    }
+    if (date)
+      if (isLessThanAWeekAway(date)) {
+        return date.format("dddd");
+      }
+    if (isSameYear(date)) {
+      return date.format("D MMM");
+    }
+
+    return date.format("D MMM YY");
+  };
+
   const selectDate = (date) => {
     setSelectDateAnchor(null);
     setTaskDueDate(date);
-    setDateButtonTxt(moment(date).format("dddd"));
   };
 
   const addTaskModalOpen = useSelector(
@@ -128,7 +142,7 @@ const AddTask = () => {
                   color="info"
                   variant="outlined"
                 >
-                  {dateButtonTxt}
+                  {generateDateButtonLabel(taskDueDate)}
                 </Button>
                 <FormControl size="small" fullWidth>
                   <Select
