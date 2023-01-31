@@ -5,6 +5,7 @@ import Main from "./components/layout/Main";
 import AddTask from "./components/tasks/add-task/AddTask";
 import Parse from "parse";
 import { useSelector } from "react-redux";
+import { Box, Stack } from "@mui/material";
 
 Parse.initialize(
   "LnrbFsNNOsViGRsQ5mdOVsCQYTz58nTxbqZmQSkr",
@@ -14,8 +15,6 @@ Parse.initialize(
 Parse.serverURL = "https://parseapi.back4app.com";
 
 function App() {
-  const sideMenuIsOpen = useSelector((state) => state.layout.sideMenuOpen);
-
   const addTaskModalIsOpen = useSelector(
     (state) => state.layout.addTaskModalOpen,
   );
@@ -23,11 +22,9 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <div>
-        {sideMenuIsOpen && <SideMenu />}
-        <Main />
-        {addTaskModalIsOpen && <AddTask />}
-      </div>
+      <SideMenu />
+      <Main />
+      {addTaskModalIsOpen && <AddTask />}
     </div>
   );
 }

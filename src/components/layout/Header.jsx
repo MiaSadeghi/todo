@@ -7,7 +7,11 @@ import Search from "./Search";
 const Header = () => {
   const dispatch = useDispatch();
   return (
-    <AppBar position="sticky" color="primary">
+    <AppBar
+      position="sticky"
+      color="primary"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Toolbar>
         <div className="header__controls-left">
           <IconButton
