@@ -30,7 +30,7 @@ const SelectDateMenu = ({
       <Menu
         open={open}
         anchorEl={anchorEl}
-        onClose={closeSelectDateMenu()}
+        onClose={closeSelectDateMenu}
 
         // sx={{ ".MuiMenu-paper": { width: 250 } }}
       >
@@ -71,27 +71,18 @@ const SelectDateMenu = ({
         })}
         <Divider />
 
-        <MenuItem
-          sx={{
-            "&.MuiButtonBase-root:hover": {
-              bgcolor: "transparent",
-              cursor: "default",
-            },
+        <StaticDatePicker
+          displayStaticWrapperAs="desktop"
+          label="Due Date"
+          openTo="day"
+          value={date}
+          onChange={(e) => {
+            selectDate(moment(e));
           }}
-        >
-          <StaticDatePicker
-            displayStaticWrapperAs="desktop"
-            label="Due Date"
-            openTo="day"
-            value={date}
-            onChange={(e) => {
-              selectDate(moment(e));
-            }}
-            inputFormat="YYYY-MM-DD"
-            renderInput={(params) => <TextField {...params} size="small" />}
-            disablePast
-          />
-        </MenuItem>
+          inputFormat="YYYY-MM-DD"
+          renderInput={(params) => <TextField {...params} size="small" />}
+          disablePast
+        />
       </Menu>
     </LocalizationProvider>
   );

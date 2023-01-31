@@ -42,6 +42,7 @@ const AddTask = () => {
   const closeSelectDateMenu = () => {
     setSelectDateAnchor(null);
   };
+
   const selectDate = (date) => {
     setSelectDateAnchor(null);
     setTaskDueDate(date);
@@ -192,8 +193,8 @@ const AddTask = () => {
       <SelectDateMenu
         anchorEl={selectDateAnchor}
         open={selectDateMenuOpen}
-        selectDate
-        closeSelectDateMenu
+        selectDate={selectDate}
+        closeSelectDateMenu={closeSelectDateMenu}
       />
       <PriorityMenu anchorEl={priorityAnchor} open={priorityMenuOpen} />
     </>
