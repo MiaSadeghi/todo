@@ -1,4 +1,7 @@
+import { useState } from "react";
+import moment from "moment";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import {
   TextField,
   Menu,
@@ -8,75 +11,52 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import {
-  LightModeOutlined as LightModeOutlinedIcon,
-  WeekendOutlined as WeekendOutlinedIcon,
-  DateRangeOutlined as DateRangeOutlinedIcon,
-  DoNotDisturbAltOutlined as DoNotDisturbAltOutlinedIcon,
-  EventOutlined as EventOutlinedIcon,
-} from "@mui/icons-material";
-import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { useState } from "react";
-import moment from "moment";
-import { findWeekendDate } from "../../../utils/dateTImeUtil";
+import { Today as TodayIcon } from "@mui/icons-material";
+import { quickDatesArr, dates } from "../../../utils/dateTimeUtil";
 
-const SelectDateMenu = ({ open, anchorEl, setSelectedDate }) => {
+const SelectDateMenu = ({
+  open,
+  anchorEl,
+  selectDate,
+  closeSelectDateMenu,
+}) => {
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
-  const changeDate = (e) => {
-    setDate(e.format("YYYY-MM-DD"));
-  };
-
-  //dates
-  const tomorrow = moment().add(1, "d");
-  const laterThisWeek = moment().add(2, "days");
-  const thisWeekend = findWeekendDate(moment());
-  const nextWeek = moment().add(7, "d");
-
-  const quickDatesList = [
-    {
-      name: "Tomorrow",
-      icon: LightModeOutlinedIcon,
-      description: tomorrow.format("ddd"),
-      color: "warning",
-    },
-    {
-      name: "Later this week",
-      icon: EventOutlinedIcon,
-      description: laterThisWeek.format("ddd"),
-      color: "primary",
-    },
-    {
-      name: "This weekend",
-      icon: WeekendOutlinedIcon,
-      description: thisWeekend.format("ddd"),
-      color: "success",
-    },
-    {
-      name: "Next week",
-      icon: DateRangeOutlinedIcon,
-      description: nextWeek.format("ddd D MMM"),
-      color: "primary",
-    },
-    {
-      name: "No date",
-      icon: DoNotDisturbAltOutlinedIcon,
-      description: "",
-      color: "info",
-    },
-  ];
+  // const changeDate = (e) => {
+  //   setDate(e.format("YYYY-MM-DD"));
+  // };
 
   return (
-    // <FormControl size="small" fullWidth>
     <LocalizationProvider dateAdapter={AdapterMoment}>
       <Menu
         open={open}
         anchorEl={anchorEl}
+        onClose={closeSelectDateMenu()}
+
         // sx={{ ".MuiMenu-paper": { width: 250 } }}
       >
-        {quickDatesList.map((date) => {
+        <MenuItem
+          onClick={() => {
+            selectDate(moment());
+          }}
+        >
+          <ListItemIcon>
+            <TodayIcon fontSize="small" color="success" />
+          </ListItemIcon>
+          <ListItemText sx={{ ".MuiListItemText-root": { fontSize: 10 } }}>
+            Today
+          </ListItemText>
+        </MenuItem>
+        <Divider />
+
+        {quickDatesArr.map((date) => {
           const IconComponent = date.icon;
           return (
-            <MenuItem key={date.name}>
+            <MenuItem
+              key={date.name}
+              onClick={() => {
+                selectDate(dates.date.name);
+              }}
+            >
               <ListItemIcon>
                 <IconComponent fontSize="small" color={date.color} />
               </ListItemIcon>
@@ -104,7 +84,9 @@ const SelectDateMenu = ({ open, anchorEl, setSelectedDate }) => {
             label="Due Date"
             openTo="day"
             value={date}
-            onChange={changeDate}
+            onChange={(e) => {
+              selectDate(moment(e));
+            }}
             inputFormat="YYYY-MM-DD"
             renderInput={(params) => <TextField {...params} size="small" />}
             disablePast
@@ -112,7 +94,6 @@ const SelectDateMenu = ({ open, anchorEl, setSelectedDate }) => {
         </MenuItem>
       </Menu>
     </LocalizationProvider>
-    // </FormControl>
   );
 };
 

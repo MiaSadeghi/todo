@@ -4,7 +4,7 @@ import { hideAddTaskModal } from "../../../redux/layoutSlice";
 import AddAlarmIcon from "@mui/icons-material/AddAlarm";
 import LabelOutlinedIcon from "@mui/icons-material/LabelOutlined";
 import OutlinedFlagOutlinedIcon from "@mui/icons-material/OutlinedFlagOutlined";
-
+import moment from "moment/moment";
 import {
   Dialog,
   TextField,
@@ -20,15 +20,15 @@ import SelectDateMenu from "./SelectDateMenu";
 import PriorityMenu from "./PriorityMenu";
 
 const AddTask = () => {
-  const [taskInput, setTaskInput] = useState("");
-  const [descriptionInput, setDescriptionInput] = useState("");
-  const [selectedProject, setSelectedProject] = useState("");
-  const [selectedDueDate, setSelectedDueDate] = useState("");
+  const [taskTitle, setTaskTitle] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskProject, setTaskProject] = useState("");
+  const [taskDueDate, setTaskDueDate] = useState("");
   const [priorityAnchor, setPriorityAnchor] = useState(null);
   const [selectDateAnchor, setSelectDateAnchor] = useState(null);
+  const [dateButtonTxt, setDateButtonTxt] = useState("Today");
 
   const selectDateMenuOpen = Boolean(selectDateAnchor);
-
   const priorityMenuOpen = Boolean(priorityAnchor);
 
   const openPriorityMenu = (e) => {
@@ -38,35 +38,45 @@ const AddTask = () => {
   const openSelectDateMenu = (e) => {
     setSelectDateAnchor(e.currentTarget);
   };
+
+  const closeSelectDateMenu = () => {
+    setSelectDateAnchor(null);
+  };
+  const selectDate = (date) => {
+    setSelectDateAnchor(null);
+    setTaskDueDate(date);
+    setDateButtonTxt(moment(date).format("dddd"));
+  };
+
   const addTaskModalOpen = useSelector(
     (state) => state.layout.addTaskModalOpen,
   );
 
   const dispatch = useDispatch();
 
-  const handleInputChange = (e) => {
-    setTaskInput(e.target.value);
+  const changeTaskTitle = (e) => {
+    setTaskTitle(e.target.value);
   };
 
-  const handleDescriptionChange = (e) => {
-    setDescriptionInput(e.target.value);
+  const changeTaskDescription = (e) => {
+    setTaskDescription(e.target.value);
   };
 
-  const handleSelectProject = (e) => {
-    setSelectedProject(e.target.value);
+  const changeTaskProject = (e) => {
+    setTaskProject(e.target.value);
     console.log(e.target.value);
   };
 
   const selectDueDate = (date) => {
     if (!date.isValid) {
-      setSelectedDueDate(null);
+      setTaskDueDate(null);
       return;
     }
-    setSelectedDueDate(date.format("YYYY-MM-DD"));
+    setTaskDueDate(date.format("YYYY-MM-DD"));
   };
-  const handleFormSubmit = (e) => {
+  const addTask = (e) => {
     e.preventDefault();
-    setTaskInput("");
+    setTaskTitle("");
   };
 
   return (
@@ -81,7 +91,7 @@ const AddTask = () => {
         sx={{ ".MuiPaper-root": { position: "absolute", top: 80 } }}
       >
         <DialogContent>
-          <form onSubmit={handleFormSubmit}>
+          <form onSubmit={addTask}>
             <TextField
               autoFocus
               margin="dense"
@@ -90,8 +100,8 @@ const AddTask = () => {
               type="text"
               placeholder="task"
               fullWidth
-              value={taskInput}
-              onChange={handleInputChange}
+              value={taskTitle}
+              onChange={changeTaskTitle}
               variant="standard"
               color="info"
             />
@@ -102,8 +112,8 @@ const AddTask = () => {
               fullWidth
               placeholder="description"
               variant="standard"
-              value={descriptionInput}
-              onChange={handleDescriptionChange}
+              value={taskDescription}
+              onChange={changeTaskDescription}
               size="small"
             />
             <Stack
@@ -117,14 +127,14 @@ const AddTask = () => {
                   color="info"
                   variant="outlined"
                 >
-                  Dute Date
+                  {dateButtonTxt}
                 </Button>
                 <FormControl size="small" fullWidth>
                   <Select
                     id="project-select"
                     label="Project"
-                    value={selectedProject}
-                    onChange={handleSelectProject}
+                    value={taskProject}
+                    onChange={changeTaskProject}
                   >
                     <MenuItem value="inbox">Inbox</MenuItem>
                     <MenuItem value="chores">Chores</MenuItem>
@@ -173,13 +183,18 @@ const AddTask = () => {
             size="small"
             variant="contained"
             type="submit"
-            disabled={taskInput.trim().length > 0 ? false : true}
+            disabled={taskTitle.trim().length > 0 ? false : true}
           >
             Add Task
           </Button>
         </DialogActions>
       </Dialog>
-      <SelectDateMenu anchorEl={selectDateAnchor} open={selectDateMenuOpen} />
+      <SelectDateMenu
+        anchorEl={selectDateAnchor}
+        open={selectDateMenuOpen}
+        selectDate
+        closeSelectDateMenu
+      />
       <PriorityMenu anchorEl={priorityAnchor} open={priorityMenuOpen} />
     </>
   );
