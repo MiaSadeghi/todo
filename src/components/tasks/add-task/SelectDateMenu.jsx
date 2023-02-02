@@ -20,7 +20,7 @@ const SelectDateMenu = ({
   selectDate,
   closeSelectDateMenu,
 }) => {
-  const [date, setDate] = useState(format(new Date(), "YYYY/MM/DD"));
+  const [date, setDate] = useState(format(new Date(), "yyyy/MM/dd"));
   // const changeDate = (e) => {
   //   setDate(e.format("YYYY-MM-DD"));
   // };
@@ -78,9 +78,8 @@ const SelectDateMenu = ({
           value={date}
           onChange={(e) => {
             selectDate(new Date(e));
-            console.log(new Date(e));
           }}
-          inputFormat="YYYY-MM-DD"
+          inputFormat="yyyy/MM/dd"
           renderInput={(params) => <TextField {...params} size="small" />}
           disablePast
         />

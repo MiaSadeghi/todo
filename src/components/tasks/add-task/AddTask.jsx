@@ -17,7 +17,12 @@ import {
 } from "@mui/material";
 import SelectDateMenu from "./SelectDateMenu";
 import PriorityMenu from "./PriorityMenu";
-import { isSameYear, isLessThanAWeekAway } from "../../../utils/dateTimeUtil";
+import { generateDateButtonLabel } from "../../../utils/dateTimeUtil";
+import {
+  openAnchoredMenu,
+  closeAnchoredMenu,
+} from "../../../utils/menuTogglers";
+import { format } from "date-fns";
 
 const AddTask = () => {
   const [taskTitle, setTaskTitle] = useState("");
@@ -26,11 +31,15 @@ const AddTask = () => {
   const [taskDueDate, setTaskDueDate] = useState(null);
   const [priorityAnchor, setPriorityAnchor] = useState(null);
   const [selectDateAnchor, setSelectDateAnchor] = useState(null);
-  const [dateButtonTxt, setDateButtonTxt] = useState("Today");
 
   const selectDateMenuOpen = Boolean(selectDateAnchor);
   const priorityMenuOpen = Boolean(priorityAnchor);
 
+  const addTaskModalOpen = useSelector(
+    (state) => state.layout.addTaskModalOpen,
+  );
+
+  //menu toggle functions.
   const openPriorityMenu = (e) => {
     setPriorityAnchor(e.currentTarget);
   };
@@ -38,45 +47,27 @@ const AddTask = () => {
   const openSelectDateMenu = (e) => {
     setSelectDateAnchor(e.currentTarget);
   };
-
   const closeSelectDateMenu = () => {
     setSelectDateAnchor(null);
   };
-
-  const generateDateButtonLabel = (date) => {
-    if (date === null) {
-      return "No due date";
-    }
-    if (date)
-      if (isLessThanAWeekAway(date)) {
-        return date.format("dddd");
-      }
-    if (isSameYear(date)) {
-      return date.format("D MMM");
-    }
-
-    return date.format("D MMM YY");
+  const closePriorityMenu = () => {
+    setPriorityAnchor(null);
   };
 
   const selectDate = (date) => {
-    setSelectDateAnchor(null);
+    closeSelectDateMenu();
     setTaskDueDate(date);
   };
 
-  const addTaskModalOpen = useSelector(
-    (state) => state.layout.addTaskModalOpen,
-  );
-
   const dispatch = useDispatch();
 
+  //task defining functions
   const changeTaskTitle = (e) => {
     setTaskTitle(e.target.value);
   };
-
   const changeTaskDescription = (e) => {
     setTaskDescription(e.target.value);
   };
-
   const changeTaskProject = (e) => {
     setTaskProject(e.target.value);
     console.log(e.target.value);
@@ -87,7 +78,7 @@ const AddTask = () => {
       setTaskDueDate(null);
       return;
     }
-    setTaskDueDate(date.format("YYYY-MM-DD"));
+    setTaskDueDate(format(date, "yyyy/MM/dd"));
   };
   const addTask = (e) => {
     e.preventDefault();
@@ -210,7 +201,11 @@ const AddTask = () => {
         selectDate={selectDate}
         closeSelectDateMenu={closeSelectDateMenu}
       />
-      <PriorityMenu anchorEl={priorityAnchor} open={priorityMenuOpen} />
+      <PriorityMenu
+        anchorEl={priorityAnchor}
+        open={priorityMenuOpen}
+        closePriorityMenu={closePriorityMenu}
+      />
     </>
   );
 };

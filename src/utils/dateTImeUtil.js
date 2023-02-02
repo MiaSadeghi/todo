@@ -41,7 +41,7 @@ const generateDateButtonLabel = (date) => {
       return format(date, "EEEE");
     }
   if (isCurrentYear(date)) {
-    return format(date, "d MMMM");
+    return format(date, "d MMM");
   }
 
   return format(date, "d MMM y");
@@ -60,28 +60,28 @@ const quickDatesArr = [
     name: "Tomorrow",
     icon: LightModeOutlinedIcon,
     date: dates.tomorrow,
-    label: dates.tomorrow.format("ddd"),
+    label: format(dates.tomorrow, "EEE"),
     color: "warning",
   },
   {
     name: "Later this week",
     icon: EventOutlinedIcon,
     date: dates.laterThisWeek,
-    label: dates.laterThisWeek.format("ddd"),
+    label: format(dates.laterThisWeek, "EEE"),
     color: "primary",
   },
   {
     name: "This weekend",
     date: dates.thisWeekend,
     icon: WeekendOutlinedIcon,
-    label: dates.thisWeekend.format("ddd"),
+    label: format(dates.thisWeekend, "EEE"),
     color: "success",
   },
   {
     name: "Next week",
     icon: DateRangeOutlinedIcon,
     date: dates.nextWeek,
-    label: dates.nextWeek.format("ddd D MMM"),
+    label: format(dates.nextWeek, "EEE d MMM"),
     color: "primary",
   },
   {
