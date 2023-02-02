@@ -2,49 +2,30 @@ import { useSelector } from "react-redux";
 import Parse from "parse";
 import { useState, useEffect } from "react";
 import Project from "../../classes/Project";
-import {
-  Drawer,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListItemIcon,
-  Toolbar,
-  ListSubheader,
-  Collapse,
-  Box,
-} from "@mui/material";
-import Inbox from "@mui/icons-material/Inbox";
-import Today from "@mui/icons-material/Today";
-import Upcoming from "@mui/icons-material/CalendarMonth";
-import Filter from "@mui/icons-material/Tune";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import Add from "@mui/icons-material/Add";
+import { Drawer, List, Toolbar, Collapse } from "@mui/material";
 import Circle from "@mui/icons-material/Circle";
-import Person from "@mui/icons-material/Person";
-
-const drawerWidth = 240;
+// import Person from "@mui/icons-material/Person";
+import SideMenuItem from "./SideMenuItem";
+import { mainProjectFilters } from "../../utils/mainProjectFilters";
+import { SideMenuChevron, SideMenuAdd } from "./SideMenuControl";
+import SideMenuSubheader from "./SideMenuSubheader";
 
 const SideMenu = () => {
   const [projectNames, setProjectNames] = useState([]);
   const [favoritesIsOpen, setFavoritesIsOpen] = useState(true);
   const [projectsIsOpen, setProjectsIsOpen] = useState(true);
+  const [sideMenuHover, setSideMenuHover] = useState(false);
   const sideMenuIsOpen = useSelector((state) => state.layout.sideMenuOpen);
-
-  const mainFilters = [
-    { title: "Today", icon: <Today color="success" /> },
-    { title: "Upcoming", icon: <Upcoming color="primary" /> },
-    { title: "Inbox", icon: <Inbox color="secondary" /> },
-    { title: "Filters & Labels", icon: <Filter color="warning" /> },
-  ];
 
   const toggleFavorites = () => {
     setFavoritesIsOpen((prevState) => !prevState);
   };
   const toggleProjects = () => {
     setProjectsIsOpen((prevState) => !prevState);
+  };
+
+  const openAddProject = () => {
+    console.log("I was clicked!");
   };
 
   useEffect(() => {
@@ -58,27 +39,36 @@ const SideMenu = () => {
   return (
     <Drawer
       sx={{
-        width: drawerWidth,
+        width: "220px",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: drawerWidth,
+          backgroundColor: "#fafafa",
+          width: "220px",
           boxSizing: "border-box",
+          border: "none",
         },
       }}
       variant="persistent"
       anchor="left"
       open={sideMenuIsOpen}
+      PaperProps={{
+        onMouseOver: () => {
+          setSideMenuHover(true);
+        },
+        onMouseLeave: () => {
+          setSideMenuHover(false);
+        },
+      }}
     >
       <Toolbar />
-      <List sx={{ mb: 3 }} dense>
-        {mainFilters.map((item) => {
+      <List sx={{ mt: 3 }} dense>
+        {mainProjectFilters.map((item) => {
           return (
-            <ListItem key={item.title} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.title} />
-              </ListItemButton>
-            </ListItem>
+            <SideMenuItem
+              title={item.title}
+              icon={item.icon}
+              key={item.title}
+            />
           );
         })}
       </List>
@@ -86,62 +76,48 @@ const SideMenu = () => {
       <List
         dense
         subheader={
-          <ListSubheader
-            component="div"
-            id="favorites"
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <ListItemText secondary="Favorites" />
-            <ListItemIcon onClick={toggleFavorites}>
-              {favoritesIsOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemIcon>
-          </ListSubheader>
+          <SideMenuSubheader title="Favorites">
+            <SideMenuChevron
+              fadeIn={sideMenuHover}
+              toggleFn={toggleFavorites}
+              isToggled={favoritesIsOpen}
+            />
+          </SideMenuSubheader>
         }
-        sx={{ mb: 3 }}
+        sx={{ mt: 3 }}
       >
         <Collapse in={favoritesIsOpen} timeout="auto" unmountOnExit>
           {projectNames.map((project) => (
-            <ListItem key={project.id} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Circle fontSize="8px " />
-                </ListItemIcon>
-                <ListItemText primary={project.attributes.name} />
-              </ListItemButton>
-            </ListItem>
+            <SideMenuItem
+              title={project.attributes.name}
+              icon={<Circle fontSize="8px " />}
+              key={project.id}
+            />
           ))}
         </Collapse>
       </List>
 
       <List
+        sx={{ mt: 3 }}
         dense
         subheader={
-          <ListSubheader
-            component="div"
-            id="projects"
-            sx={{ display: "flex", justifyContent: "space-between" }}
-          >
-            <ListItemText secondary="Projects" />
-
-            <ListItemIcon>
-              <Add />
-            </ListItemIcon>
-            <ListItemIcon onClick={toggleProjects}>
-              {projectsIsOpen ? <ExpandLess /> : <ExpandMore />}
-            </ListItemIcon>
-          </ListSubheader>
+          <SideMenuSubheader title="Projects">
+            <SideMenuAdd fadeIn={sideMenuHover} onClick={openAddProject} />
+            <SideMenuChevron
+              fadeIn={sideMenuHover}
+              toggleFn={toggleProjects}
+              isToggled={projectsIsOpen}
+            />
+          </SideMenuSubheader>
         }
       >
         <Collapse in={projectsIsOpen} timeout="auto" unmountOnExit>
           {projectNames.map((project) => (
-            <ListItem key={project.id} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Circle fontSize="8px " />
-                </ListItemIcon>
-                <ListItemText primary={project.attributes.name} />
-              </ListItemButton>
-            </ListItem>
+            <SideMenuItem
+              title={project.attributes.name}
+              icon={<Circle fontSize="8px " />}
+              key={project.id}
+            />
           ))}
         </Collapse>
       </List>
