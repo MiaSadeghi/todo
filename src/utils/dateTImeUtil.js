@@ -1,4 +1,11 @@
-import moment from "moment";
+import {
+  differenceInCalendarDays,
+  isThisYear,
+  getDay,
+  addDays,
+  addWeeks,
+  format,
+} from "date-fns";
 import {
   LightModeOutlined as LightModeOutlinedIcon,
   WeekendOutlined as WeekendOutlinedIcon,
@@ -9,27 +16,43 @@ import {
 
 //find next weekend's date
 const findWeekendDate = (date) => {
-  const delta = 6 - date.day();
-  return date.add(delta, "days");
+  const delta = 6 - getDay(date);
+  return addDays(date, delta);
 };
 
 //check how far in the future the date is
 
 const isLessThanAWeekAway = (date) => {
-  const delta = date.diff(moment(), "days");
+  const delta = differenceInCalendarDays(date, new Date());
   return delta < 7;
 };
 
-const isSameYear = (date) => {
-  return date.year() === moment().year();
+const isCurrentYear = (date) => {
+  return isThisYear(date);
+};
+
+//get the text format to show user their selected date
+const generateDateButtonLabel = (date) => {
+  if (date === null) {
+    return "No due date";
+  }
+  if (date)
+    if (isLessThanAWeekAway(date)) {
+      return format(date, "EEEE");
+    }
+  if (isCurrentYear(date)) {
+    return format(date, "d MMMM");
+  }
+
+  return format(date, "d MMM y");
 };
 
 //dates
 const dates = {
-  tomorrow: moment().add(1, "d"),
-  laterThisWeek: moment().add(2, "days"),
-  thisWeekend: findWeekendDate(moment()),
-  nextWeek: moment().add(7, "d"),
+  tomorrow: addDays(new Date(), 1),
+  laterThisWeek: addDays(new Date(), 2),
+  thisWeekend: findWeekendDate(new Date()),
+  nextWeek: addWeeks(new Date(), 1),
 };
 
 const quickDatesArr = [
@@ -70,4 +93,10 @@ const quickDatesArr = [
   },
 ];
 
-export { quickDatesArr, dates, isLessThanAWeekAway, isSameYear };
+export {
+  quickDatesArr,
+  dates,
+  isLessThanAWeekAway,
+  isCurrentYear,
+  generateDateButtonLabel,
+};

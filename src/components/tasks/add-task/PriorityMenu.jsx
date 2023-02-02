@@ -4,7 +4,7 @@ import {
   Flag as FlagIcon,
 } from "@mui/icons-material";
 
-const PriorityMenu = ({ anchorEl, open }) => {
+const PriorityMenu = ({ anchorEl, open, closePriorityMenu }) => {
   const prioritiesList = [
     { priority: 1, color: "error", icon: FlagIcon },
     { priority: 2, color: "warning", icon: FlagIcon },
@@ -13,7 +13,7 @@ const PriorityMenu = ({ anchorEl, open }) => {
   ];
 
   return (
-    <Menu anchorEl={anchorEl} open={open}>
+    <Menu anchorEl={anchorEl} open={open} onClose={closePriorityMenu}>
       {prioritiesList.map((p) => {
         const IconComponent = p.icon;
 

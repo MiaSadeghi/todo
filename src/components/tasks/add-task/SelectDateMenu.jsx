@@ -1,7 +1,7 @@
 import { useState } from "react";
-import moment from "moment";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { format } from "date-fns";
 import {
   TextField,
   Menu,
@@ -12,12 +12,7 @@ import {
   Divider,
 } from "@mui/material";
 import { Today as TodayIcon } from "@mui/icons-material";
-import {
-  quickDatesArr,
-  dates,
-  isSameYear,
-  isLessThanAWeekAway,
-} from "../../../utils/dateTimeUtil";
+import { quickDatesArr } from "../../../utils/dateTimeUtil";
 
 const SelectDateMenu = ({
   open,
@@ -25,13 +20,13 @@ const SelectDateMenu = ({
   selectDate,
   closeSelectDateMenu,
 }) => {
-  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
+  const [date, setDate] = useState(format(new Date(), "YYYY/MM/DD"));
   // const changeDate = (e) => {
   //   setDate(e.format("YYYY-MM-DD"));
   // };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterMoment}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Menu
         open={open}
         anchorEl={anchorEl}
@@ -41,7 +36,7 @@ const SelectDateMenu = ({
       >
         <MenuItem
           onClick={() => {
-            selectDate(moment());
+            selectDate(new Date());
           }}
         >
           <ListItemIcon>
@@ -82,8 +77,8 @@ const SelectDateMenu = ({
           openTo="day"
           value={date}
           onChange={(e) => {
-            selectDate(moment(e));
-            console.log(moment(e));
+            selectDate(new Date(e));
+            console.log(new Date(e));
           }}
           inputFormat="YYYY-MM-DD"
           renderInput={(params) => <TextField {...params} size="small" />}
