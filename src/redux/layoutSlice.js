@@ -5,6 +5,7 @@ export const layoutSlice = createSlice({
   initialState: {
     sideMenuOpen: false,
     addTaskModalOpen: false,
+    addProjectModalOpen: false,
   },
 
   reducers: {
@@ -19,9 +20,17 @@ export const layoutSlice = createSlice({
     hideAddTaskModal: (state) => {
       state.addTaskModalOpen = false;
     },
+
+    toggleAddProjectModal: (state) => {
+      state.addProjectModalOpen = !state.addProjectModalOpen;
+    },
   },
 });
 
-export const { showAddTaskModal, hideAddTaskModal, toggleSideMenu } =
-  layoutSlice.actions;
+export const {
+  showAddTaskModal,
+  hideAddTaskModal,
+  toggleSideMenu,
+  toggleAddProjectModal,
+} = layoutSlice.actions;
 export default layoutSlice.reducer;
