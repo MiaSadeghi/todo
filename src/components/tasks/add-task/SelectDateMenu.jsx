@@ -21,19 +21,10 @@ const SelectDateMenu = ({
   closeSelectDateMenu,
 }) => {
   const [date, setDate] = useState(format(new Date(), "yyyy/MM/dd"));
-  // const changeDate = (e) => {
-  //   setDate(e.format("YYYY-MM-DD"));
-  // };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Menu
-        open={open}
-        anchorEl={anchorEl}
-        onClose={closeSelectDateMenu}
-
-        // sx={{ ".MuiMenu-paper": { width: 250 } }}
-      >
+      <Menu open={open} anchorEl={anchorEl} onClose={closeSelectDateMenu}>
         <MenuItem
           onClick={() => {
             selectDate(new Date());

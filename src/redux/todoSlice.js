@@ -10,6 +10,8 @@ const todoSlice = createSlice({
       project: "",
       description: "",
       priority: "",
+      reminder: "",
+      labels: [],
     },
     project: {
       title: "",

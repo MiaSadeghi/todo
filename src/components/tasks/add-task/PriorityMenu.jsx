@@ -1,15 +1,20 @@
 import { Menu, ListItemText, MenuItem, ListItemIcon } from "@mui/material";
 import {
-  OutlinedFlagOutlined as OutlinedFlagOutlinedIcon,
-  Flag as FlagIcon,
+  OutlinedFlagOutlined as OutlinedFlag,
+  Flag,
 } from "@mui/icons-material";
 
-const PriorityMenu = ({ anchorEl, open, closePriorityMenu }) => {
+const PriorityMenu = ({
+  anchorEl,
+  open,
+  closePriorityMenu,
+  selectPriority,
+}) => {
   const prioritiesList = [
-    { priority: 1, color: "error", icon: FlagIcon },
-    { priority: 2, color: "warning", icon: FlagIcon },
-    { priority: 3, color: "success", icon: FlagIcon },
-    { priority: 4, color: "info", icon: OutlinedFlagOutlinedIcon },
+    { priority: 1, color: "error", icon: Flag },
+    { priority: 2, color: "warning", icon: Flag },
+    { priority: 3, color: "success", icon: Flag },
+    { priority: 4, color: "info", icon: OutlinedFlag },
   ];
 
   return (
@@ -18,7 +23,12 @@ const PriorityMenu = ({ anchorEl, open, closePriorityMenu }) => {
         const IconComponent = p.icon;
 
         return (
-          <MenuItem key={p.priority}>
+          <MenuItem
+            key={p.priority}
+            onClick={() => {
+              selectPriority(p.priority);
+            }}
+          >
             <ListItemIcon>
               <IconComponent color={p.color} />
             </ListItemIcon>
