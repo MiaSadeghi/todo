@@ -16,6 +16,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { addProject } from "../../../redux/todoSlice";
 
 let newProject = {};
 
@@ -35,6 +36,7 @@ const AddProject = () => {
     e.preventDefault();
     newProject = { title, color, isFavorite };
     console.log(newProject);
+    dispatch(addProject(newProject));
     dispatch(toggleAddProjectModal());
   };
 

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import sampleProjects from "./../utils/sampleProjects";
 
 const todoSlice = createSlice({
   name: "todo",
@@ -20,7 +21,7 @@ const todoSlice = createSlice({
       view: "list",
     },
 
-    projects: [],
+    projects: sampleProjects,
   },
   reducers: {
     toggleCheck: (state) => {

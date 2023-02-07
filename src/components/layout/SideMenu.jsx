@@ -1,7 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import Parse from "parse";
-import { useState, useEffect } from "react";
-import Project from "../../classes/Project";
+import { useState } from "react";
 import { Drawer, List, Toolbar, Collapse } from "@mui/material";
 import Circle from "@mui/icons-material/Circle";
 // import Person from "@mui/icons-material/Person";
@@ -12,7 +10,7 @@ import SideMenuSubheader from "./SideMenuSubheader";
 import { toggleAddProjectModal } from "../../redux/layoutSlice";
 
 const SideMenu = () => {
-  const [projectNames, setProjectNames] = useState([]);
+  const projects = useSelector((state) => state.todo.projects);
   const [favoritesIsOpen, setFavoritesIsOpen] = useState(true);
   const [projectsIsOpen, setProjectsIsOpen] = useState(true);
   const [sideMenuHover, setSideMenuHover] = useState(false);
@@ -30,14 +28,6 @@ const SideMenu = () => {
     dispatch(toggleAddProjectModal());
     console.log("I was clicked!");
   };
-
-  useEffect(() => {
-    const query = new Parse.Query(Project);
-    query.find().then((result) => {
-      setProjectNames(result);
-      console.log(result);
-    });
-  }, []);
 
   return (
     <Drawer
@@ -90,13 +80,15 @@ const SideMenu = () => {
         sx={{ mt: 3 }}
       >
         <Collapse in={favoritesIsOpen} timeout="auto" unmountOnExit>
-          {projectNames.map((project) => (
-            <SideMenuItem
-              title={project.attributes.name}
-              icon={<Circle fontSize="8px " />}
-              key={project.id}
-            />
-          ))}
+          {projects
+            .filter((p) => p.isFavorite === true)
+            .map((project) => (
+              <SideMenuItem
+                title={project.title}
+                icon={<Circle fontSize="8px " sx={{ color: project.color }} />}
+                key={project.title}
+              />
+            ))}
         </Collapse>
       </List>
 
@@ -115,11 +107,11 @@ const SideMenu = () => {
         }
       >
         <Collapse in={projectsIsOpen} timeout="auto" unmountOnExit>
-          {projectNames.map((project) => (
+          {projects.map((project) => (
             <SideMenuItem
-              title={project.attributes.name}
-              icon={<Circle fontSize="8px " />}
-              key={project.id}
+              title={project.title}
+              icon={<Circle fontSize="8px " sx={{ color: project.color }} />}
+              key={project.title}
             />
           ))}
         </Collapse>
