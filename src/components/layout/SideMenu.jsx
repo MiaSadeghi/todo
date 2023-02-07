@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Parse from "parse";
 import { useState, useEffect } from "react";
 import Project from "../../classes/Project";
@@ -9,6 +9,7 @@ import SideMenuItem from "./SideMenuItem";
 import { mainProjectFilters } from "../../utils/mainProjectFilters";
 import { SideMenuChevron, SideMenuAdd } from "./SideMenuControl";
 import SideMenuSubheader from "./SideMenuSubheader";
+import { toggleAddProjectModal } from "../../redux/layoutSlice";
 
 const SideMenu = () => {
   const [projectNames, setProjectNames] = useState([]);
@@ -17,6 +18,7 @@ const SideMenu = () => {
   const [sideMenuHover, setSideMenuHover] = useState(false);
   const sideMenuIsOpen = useSelector((state) => state.layout.sideMenuOpen);
 
+  const dispatch = useDispatch();
   const toggleFavorites = () => {
     setFavoritesIsOpen((prevState) => !prevState);
   };
@@ -25,6 +27,7 @@ const SideMenu = () => {
   };
 
   const openAddProject = () => {
+    dispatch(toggleAddProjectModal());
     console.log("I was clicked!");
   };
 

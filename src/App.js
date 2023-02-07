@@ -5,6 +5,7 @@ import Main from "./components/layout/Main";
 import AddTask from "./components/tasks/add-task/AddTask";
 import Parse from "parse";
 import { useSelector } from "react-redux";
+import AddProject from "./components/tasks/add-project/AddProject";
 
 Parse.initialize(
   "LnrbFsNNOsViGRsQ5mdOVsCQYTz58nTxbqZmQSkr",
@@ -17,6 +18,9 @@ function App() {
   const addTaskModalIsOpen = useSelector(
     (state) => state.layout.addTaskModalOpen,
   );
+  const addProjectModalOpen = useSelector(
+    (state) => state.layout.addProjectModalOpen,
+  );
 
   return (
     <div className="App">
@@ -24,6 +28,7 @@ function App() {
       <SideMenu />
       <Main />
       {addTaskModalIsOpen && <AddTask />}
+      {addProjectModalOpen && <AddProject />}
     </div>
   );
 }

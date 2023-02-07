@@ -33,4 +33,5 @@ export const {
   toggleSideMenu,
   toggleAddProjectModal,
 } = layoutSlice.actions;
+
 export default layoutSlice.reducer;
