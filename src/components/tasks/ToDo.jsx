@@ -1,28 +1,25 @@
-import { Checkbox, FormControlLabel, Skeleton } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { toggleCheck } from "../../redux/todoSlice";
+import { ListItem, ListItemButton, ListItemText } from "@mui/material";
+import ToDoSecondaryControls from "./ToDoSecondaryControls";
+import { useState } from "react";
 
-const ToDo = (props) => {
-  const { text, decorative } = props;
-  const dispatch = useDispatch();
-  const handleCheckbox = () => {
-    dispatch(toggleCheck());
-    console.log(`${text} was modified`);
-  };
+const ToDo = ({ title }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="task__item">
-      <FormControlLabel
-        control={<Checkbox onClick={handleCheckbox} disabled={decorative} />}
-        label={
-          decorative ? (
-            <Skeleton sx={{ width: "700px" }} variant="text" />
-          ) : (
-            text
-          )
-        }
-      />{" "}
-    </div>
+    <ListItem
+      sx={{ pr: "unset" }}
+      secondaryAction={<ToDoSecondaryControls fadeIn={isHovered} />}
+      onMouseOver={() => {
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+      }}
+    >
+      <ListItemButton>
+        <ListItemText primary={title} />
+      </ListItemButton>
+    </ListItem>
   );
 };
 
