@@ -2,6 +2,7 @@ import { Stack } from "@mui/material";
 import ToDoList from "../tasks/ToDoList";
 import { useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
+import AddLabel from "../tasks/add-task/AddLabel";
 
 const Main = () => {
   const sideMenuIsOpen = useSelector((state) => state.layout.sideMenuOpen);
@@ -17,6 +18,7 @@ const Main = () => {
 
   return (
     <Stack justifyContent="center" alignItems="center" sx={styles}>
+      <AddLabel />
       <ToDoList />
     </Stack>
   );

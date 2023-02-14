@@ -19,9 +19,11 @@ const todoSlice = createSlice({
       color: "",
       isFavorite: false,
       view: "list",
+      labels: [],
     },
 
     projects: sampleProjects,
+    labels: [],
   },
   reducers: {
     toggleCheck: (state) => {
@@ -31,9 +33,20 @@ const todoSlice = createSlice({
     addProject: (state, action) => {
       state.projects.push(action.payload);
     },
+
+    addLabel: (state, action) => {
+      if (!state.labels.includes(action.payload)) {
+        state.labels.push(action.payload);
+      }
+    },
+
+    removeLabel: (state, action) => {
+      state.labels = state.labels.filter((label) => label !== action.payload);
+    },
   },
 });
 
-export const { toggleCheck, addProject } = todoSlice.actions;
+export const { toggleCheck, addProject, addLabel, removeLabel } =
+  todoSlice.actions;
 
 export default todoSlice.reducer;
