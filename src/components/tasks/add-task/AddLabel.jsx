@@ -28,9 +28,7 @@ const AddLabel = () => {
 
         const { inputValue } = params;
         // Suggest the creation of a new value
-        const isExisting = options.some(
-          (option) => inputValue === option.title,
-        );
+        const isExisting = options.some((option) => inputValue === option);
         if (inputValue !== "" && !isExisting) {
           filtered.push({
             inputValue,

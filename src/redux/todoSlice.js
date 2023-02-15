@@ -36,7 +36,8 @@ const todoSlice = createSlice({
 
     addLabel: (state, action) => {
       if (!state.labels.includes(action.payload)) {
-        state.labels.push(action.payload);
+        state.labels.push({ title: action.payload });
+        console.log(state.labels);
       }
     },
 
