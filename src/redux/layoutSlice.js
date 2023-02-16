@@ -6,9 +6,18 @@ export const layoutSlice = createSlice({
     sideMenuOpen: false,
     addTaskModalOpen: false,
     addProjectModalOpen: false,
+    signInModalOpen: false,
+    accountMenuModalOpen: false,
   },
 
   reducers: {
+    showAccountMenu: (state) => {
+      state.accountMenuModalOpen = true;
+    },
+    hideAccountMenu: (state) => {
+      state.accountMenuModalOpen = false;
+    },
+
     toggleSideMenu: (state) => {
       state.sideMenuOpen = !state.sideMenuOpen;
     },
@@ -24,6 +33,14 @@ export const layoutSlice = createSlice({
     toggleAddProjectModal: (state) => {
       state.addProjectModalOpen = !state.addProjectModalOpen;
     },
+
+    showSignInModal: (state) => {
+      state.signInModalOpen = true;
+    },
+
+    hideSignInModal: (state) => {
+      state.signInModalOpen = false;
+    },
   },
 });
 
@@ -32,6 +49,10 @@ export const {
   hideAddTaskModal,
   toggleSideMenu,
   toggleAddProjectModal,
+  showSignInModal,
+  hideSignInModal,
+  showAccountMenu,
+  hideAccountMenu,
 } = layoutSlice.actions;
 
 export default layoutSlice.reducer;

@@ -6,6 +6,7 @@ import AddTask from "./components/tasks/add-task/AddTask";
 import Parse from "parse";
 import { useSelector } from "react-redux";
 import AddProject from "./components/tasks/add-project/AddProject";
+import SignInForm from "./components/auth/SignInForm";
 
 Parse.initialize(
   "LnrbFsNNOsViGRsQ5mdOVsCQYTz58nTxbqZmQSkr",
@@ -22,6 +23,7 @@ function App() {
     (state) => state.layout.addProjectModalOpen,
   );
 
+  const signInModalOpen = useSelector((state) => state.layout.signInModalOpen);
   return (
     <div className="App">
       <Header />
